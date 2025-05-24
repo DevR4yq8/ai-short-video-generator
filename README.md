@@ -1,199 +1,199 @@
-# AI Short Generator - Dokumentacja
+# AI Short Generator - Documentation
 
-## Spis Treści
+## Table of Contents
 
-1. [Wprowadzenie](#wprowadzenie)
-2. [Główne Funkcje](#główne-funkcje)
-3. [Wymagania Systemowe i Instalacja](#wymagania-systemowe-i-instalacja)
-4. [Sposób Użycia (Linia Komend)](#sposób-użycia-linia-komend)
-5. [Argumenty Linii Komend](#argumenty-linii-komend)
-6. [Jak To Działa?](#jak-to-działa)
-7. [Struktura Programu](#struktura-programu)
-8. [Pliki Wyjściowe](#pliki-wyjściowe)
-9. [Informacje Dodatkowe](#informacje-dodatkowe)
+1. [Introduction](#introduction)
+2. [Main Features](#main-features)
+3. [System Requirements and Installation](#system-requirements-and-installation)
+4. [Usage (Command Line)](#usage-command-line)
+5. [Command Line Arguments](#command-line-arguments)
+6. [How It Works](#how-it-works)
+7. [Program Structure](#program-structure)
+8. [Output Files](#output-files)
+9. [Additional Information](#additional-information)
 
-## 1. Wprowadzenie
+## 1. Introduction
 
-AI Short Generator to program w języku Python służący do automatycznego tworzenia krótkich filmów (tzw. "shortów") z dłuższych materiałów wideo. Program wykorzystuje techniki analizy obrazu i dźwięku, w tym opcjonalnie modele sztucznej inteligencji (AI) oparte na TensorFlow, do identyfikacji i ekstrakcji najciekawszych fragmentów z oryginalnego filmu.
+AI Short Generator is a Python program designed for automatically creating short videos (so-called "shorts") from longer video materials. The program uses image and sound analysis techniques, including optionally artificial intelligence (AI) models based on TensorFlow, to identify and extract the most interesting fragments from the original video.
 
-Głównym celem jest dostarczenie określonej liczby shortów o zadanej długości, które zachowują oryginalną rozdzielczość i proporcje obrazu materiału źródłowego. Unikalną cechą jest **inteligentne kończenie segmentów**, które dąży do zakończenia shorta, gdy "ciekawość" treści zaczyna spadać, zamiast sztywno trzymać się maksymalnej długości.
+The main goal is to provide a specified number of shorts with a given duration that preserve the original resolution and aspect ratio of the source material. A unique feature is **intelligent segment ending**, which aims to end the short when the "interest" of the content begins to decline, instead of rigidly adhering to the maximum duration.
 
-## 2. Główne Funkcje
+## 2. Main Features
 
-- **Automatyczne tworzenie shortów**: Generuje zadaną liczbę krótkich klipów z długego filmu.
-- **Analiza AI (opcjonalna)**: Jeśli dostępny jest TensorFlow, program wykorzystuje model MobileNetV2 do zaawansowanej analizy wizualnej. W przeciwnym razie stosuje podstawowe techniki analizy obrazu.
-- **Kompleksowa analiza**: Analizuje cechy wizualne (kolor, tekstura, jasność, kontrast), cechy audio (MFCC, głośność, barwa, tempo) oraz ruch wideo.
-- **Wybór "najciekawszych" momentów**: Na podstawie połączonych cech i klasteryzacji, program identyfikuje segmenty o wysokim "wyniku ciekawości".
-- **Inteligentne kończenie segmentów**: Shorty mogą kończyć się wcześniej niż maksymalna dozwolona długość, jeśli analiza wskaże spadek "ciekawości" treści.
-- **Konfigurowalność**: Umożliwia zdefiniowanie liczby shortów, minimalnej i maksymalnej długości każdego shortu.
-- **Zachowanie oryginalnych proporcji**: Shorty są generowane z zachowaniem oryginalnej rozdzielczości i proporcji obrazu materiału źródłowego.
-- **Raportowanie**: Generuje szczegółowy raport w formacie JSON zawierający informacje o procesie i wynikach, w tym o przyczynie zakończenia każdego shorta.
+- **Automatic short creation**: Generates a specified number of short clips from a long video.
+- **AI analysis (optional)**: If TensorFlow is available, the program uses the MobileNetV2 model for advanced visual analysis. Otherwise, it applies basic image analysis techniques.
+- **Comprehensive analysis**: Analyzes visual features (color, texture, brightness, contrast), audio features (MFCC, volume, timbre, tempo), and video motion.
+- **Selection of "most interesting" moments**: Based on combined features and clustering, the program identifies segments with high "interest scores".
+- **Intelligent segment ending**: Shorts can end earlier than the maximum allowed duration if analysis indicates a drop in content "interest".
+- **Configurability**: Allows defining the number of shorts, minimum and maximum duration of each short.
+- **Preserving original proportions**: Shorts are generated while maintaining the original resolution and aspect ratio of the source material.
+- **Reporting**: Generates a detailed JSON report containing information about the process and results, including the reason for ending each short.
 
-## 3. Wymagania Systemowe i Instalacja
+## 3. System Requirements and Installation
 
-**Wymagany Python**: wersja 3.11
+**Required Python**: version 3.11
 
-### Biblioteki Python
+### Python Libraries
 
-Do poprawnego działania programu wymagane są następujące biblioteki:
+The following libraries are required for proper program operation:
 
 - moviepy
 - librosa
 - opencv-python
 - numpy
 - scikit-learn
-- tensorflow (opcjonalnie, dla zaawansowanej analizy AI)
+- tensorflow (optionally, for advanced AI analysis)
 
-Można je zainstalować za pomocą pip:
+They can be installed using pip:
 
 ```bash
 py -3.11 -m pip install moviepy librosa opencv-python numpy scikit-learn tensorflow
 ```
 
-Jeśli nie chcesz korzystać z analizy opartej na TensorFlow, możesz pominąć instalację tej biblioteki. Program automatycznie wykryje jej brak i przełączy się na podstawowy tryb analizy.
+If you don't want to use TensorFlow-based analysis, you can skip installing this library. The program will automatically detect its absence and switch to basic analysis mode.
 
-## 4. Sposób Użycia (Linia Komend)
+## 4. Usage (Command Line)
 
-Program uruchamia się z linii komend, podając ścieżkę do pliku wideo oraz opcjonalne argumenty.
+The program is run from the command line, providing the path to the video file and optional arguments.
 
-### Podstawowe użycie (generuje 10 shortów):
+### Basic usage (generates 10 shorts):
 
 ```bash
 py -3.11 .\ai-short-video-generator.py .\film.mp4
 ```
 
-### Użycie z dodatkowymi opcjami:
+### Usage with additional options:
 
 ```bash
-py -3.11 .\ai-short-video-generator.py .\film.mp4 -o /folder/wyjsciowy -c 5 --min-duration 20 --max-duration 45
+py -3.11 .\ai-short-video-generator.py .\film.mp4 -o /output/folder -c 5 --min-duration 20 --max-duration 45
 ```
 
-## 5. Argumenty Linii Komend
+## 5. Command Line Arguments
 
-- **video_path** (pozycyjny): Ścieżka do pliku wideo, który ma zostać przetworzony.
-- **--output / -o** (opcjonalny): Nazwa folderu, w którym zostaną zapisane wygenerowane shorty oraz raport. Domyślnie: `shorts`.
-- **--count / -c** (opcjonalny): Dokładna liczba shortów do wygenerowania. Program dołoży starań, aby wygenerować dokładnie tyle shortów. Domyślnie: `10`.
-- **--min-duration** (opcjonalny): Minimalna długość pojedynczego shortu w sekundach. Domyślnie: `30`.
-- **--max-duration** (opcjonalny): Maksymalna długość pojedynczego shortu w sekundach. Domyślnie: `60`.
-- **--width** (opcjonalny): Docelowa szerokość shortu. Obecnie ignorowane, program zachowuje oryginalną szerokość. Domyślnie: `1080`.
-- **--height** (opcjonalny): Docelowa wysokość shortu. Obecnie ignorowane, program zachowuje oryginalną wysokość. Domyślnie: `1920`.
+- **video_path** (positional): Path to the video file to be processed.
+- **--output / -o** (optional): Name of the folder where generated shorts and report will be saved. Default: `shorts`.
+- **--count / -c** (optional): Exact number of shorts to generate. The program will strive to generate exactly this many shorts. Default: `10`.
+- **--min-duration** (optional): Minimum duration of a single short in seconds. Default: `30`.
+- **--max-duration** (optional): Maximum duration of a single short in seconds. Default: `60`.
+- **--width** (optional): Target width of the short. Currently ignored, program preserves original width. Default: `1080`.
+- **--height** (optional): Target height of the short. Currently ignored, program preserves original height. Default: `1920`.
 
-## 6. Jak To Działa?
+## 6. How It Works
 
-Proces generowania shortów można podzielić na kilka głównych etapów:
+The short generation process can be divided into several main stages:
 
-### 6.1. Analiza Treści (analyze_comprehensive)
+### 6.1. Content Analysis (analyze_comprehensive)
 
-1. **Ładowanie wideo**: Oryginalny plik wideo jest ładowany za pomocą moviepy.
+1. **Video loading**: The original video file is loaded using moviepy.
 
-2. **Próbkowanie**: Wideo jest analizowane poprzez pobieranie klatek w regularnych odstępach czasu (interwał próbkowania, `sample_interval_actual`, jest dynamicznie dostosowywany, domyślnie co ok. 1 sekundę dla typowych długości filmów).
+2. **Sampling**: The video is analyzed by extracting frames at regular time intervals (sampling interval, `sample_interval_actual`, is dynamically adjusted, typically about every 1 second for typical video lengths).
 
-3. **Ekstrakcja Cech Wizualnych**:
-   - **Z TensorFlow** (`extract_features_ai`): Jeśli TensorFlow jest dostępny, każda próbkowana klatka jest przetwarzana przez model MobileNetV2 w celu ekstrakcji wektora cech opisujących zawartość wizualną.
-   - **Podstawowa** (`extract_features_basic`): Jeśli TensorFlow nie jest dostępny, z klatki ekstrahowane są podstawowe cechy: histogramy kolorów w przestrzeni HSV, miara tekstury (wariancja Laplasjanu), średnia jasność i kontrast.
+3. **Visual Feature Extraction**:
+   - **With TensorFlow** (`extract_features_ai`): If TensorFlow is available, each sampled frame is processed by the MobileNetV2 model to extract a feature vector describing visual content.
+   - **Basic** (`extract_features_basic`): If TensorFlow is not available, basic features are extracted from the frame: color histograms in HSV space, texture measure (Laplacian variance), average brightness and contrast.
 
-4. **Ekstrakcja Cech Audio** (`analyze_audio_advanced`):
-   - Ścieżka dźwiękowa jest analizowana przy użyciu librosa.
-   - Ekstrahowane są współczynniki MFCC (Mel-Frequency Cepstral Coefficients), głośność (RMS), jasność dźwięku (spectral centroid), tempo zmian (zero crossing rate) oraz tempo muzyczne.
+4. **Audio Feature Extraction** (`analyze_audio_advanced`):
+   - The audio track is analyzed using librosa.
+   - MFCC coefficients (Mel-Frequency Cepstral Coefficients), volume (RMS), sound brightness (spectral centroid), rate of change (zero crossing rate), and musical tempo are extracted.
 
-5. **Analiza Ruchu** (`calculate_motion`):
-   - Obliczana jest intensywność ruchu pomiędzy kolejnymi próbkowanymi klatkami przy użyciu przepływu optycznego (Optical Flow - Lucas-Kanade) lub, w przypadku problemów, różnicy absolutnej między klatkami w skali szarości.
+5. **Motion Analysis** (`calculate_motion`):
+   - Motion intensity is calculated between consecutive sampled frames using optical flow (Optical Flow - Lucas-Kanade) or, in case of problems, absolute difference between grayscale frames.
 
-### 6.2. Wybór Segmentów i Inteligentne Kończenie (find_best_segments_ai, find_optimal_segment_end)
+### 6.2. Segment Selection and Intelligent Ending (find_best_segments_ai, find_optimal_segment_end)
 
-1. **Normalizacja Cech**: Wszystkie zebrane cechy (wizualne, audio, ruch) są normalizowane (StandardScaler).
+1. **Feature Normalization**: All collected features (visual, audio, motion) are normalized (StandardScaler).
 
-2. **Obliczanie "Wyniku Ciekawości"** (`calculate_interest_score`): Dla każdego momentu (próbki) obliczany jest zagregowany wynik "ciekawości", biorący pod uwagę:
-   - Wariancję cech wizualnych (różnorodność wizualna)
-   - Energię audio (średnia wartość absolutna pierwszych 13 współczynników MFCC)
-   - Wynik analizy ruchu
+2. **"Interest Score" Calculation** (`calculate_interest_score`): For each moment (sample), an aggregated "interest" score is calculated, taking into account:
+   - Visual feature variance (visual diversity)
+   - Audio energy (average absolute value of the first 13 MFCC coefficients)
+   - Motion analysis score
    
-   Wagi dla tych komponentów to odpowiednio 40% dla wizualnych, 40% dla audio i 20% dla ruchu.
+   Weights for these components are 40% for visual, 40% for audio, and 20% for motion respectively.
 
-3. **Klasteryzacja**: Połączone, znormalizowane cechy są poddawane klasteryzacji metodą K-Means. Celem jest znalezienie różnorodnych grup interesujących momentów.
+3. **Clustering**: Combined, normalized features are subjected to K-Means clustering. The goal is to find diverse groups of interesting moments.
 
-4. **Wybór Początków Segmentów**:
-   - Potencjalne początki segmentów są wybierane na podstawie najwyższych wyników ciekawości, z preferencją dla segmentów pochodzących z różnych klastrów, aby zapewnić różnorodność.
-   - Program dba o to, by segmenty się znacząco nie nakładały.
+4. **Segment Start Selection**:
+   - Potential segment starts are selected based on highest interest scores, with preference for segments from different clusters to ensure diversity.
+   - The program ensures that segments don't significantly overlap.
 
-5. **Inteligentne Kończenie Segmentów** (`find_optimal_segment_end`):
-   - Dla każdego wybranego początku segmentu, program analizuje ewolucję "wyniku ciekawości" w kolejnych próbkach.
-   - Obliczana jest bazowa ciekawość na podstawie pierwszych kilku sekund (lub odpowiadającej liczby próbek) segmentu.
-   - Następnie, w ruchomym oknie (kilka próbek), monitorowana jest średnia ciekawość.
-   - Jeśli średnia ciekawość w oknie spadnie poniżej pewnego progu (domyślnie 82% bazowej ciekawości, czyli spadek o 18%), segment jest kończony w tym momencie.
-   - Jeśli spadek ciekawości nie nastąpi, segment osiągnie maksymalną dozwoloną długość (`max_duration`).
-   - Każdy segment musi mieć co najmniej `min_duration`.
+5. **Intelligent Segment Ending** (`find_optimal_segment_end`):
+   - For each selected segment start, the program analyzes the evolution of "interest score" in subsequent samples.
+   - Base interest is calculated based on the first few seconds (or corresponding number of samples) of the segment.
+   - Then, in a moving window (several samples), average interest is monitored.
+   - If the average interest in the window drops below a certain threshold (default 82% of base interest, i.e., an 18% drop), the segment is ended at that point.
+   - If interest doesn't drop, the segment reaches maximum allowed duration (`max_duration`).
+   - Each segment must have at least `min_duration`.
 
-6. **Finalizacja Listy Segmentów**:
-   - Jeśli początkowa selekcja z inteligentnym kończeniem nie da wymaganej liczby (`num_shorts`) shortów, algorytm próbuje dobrać kolejne najlepsze segmenty (również z inteligentnym kończeniem), a w ostateczności wypełnia brakujące miejsca losowymi fragmentami filmu o minimalnej długości.
+6. **Segment List Finalization**:
+   - If initial selection with intelligent ending doesn't yield the required number (`num_shorts`) of shorts, the algorithm tries to select additional best segments (also with intelligent ending), and ultimately fills missing slots with random video fragments of minimum duration.
 
-### 6.3. Generowanie Shortów (generate_shorts)
+### 6.3. Short Generation (generate_shorts)
 
-1. **Wycinanie**: Wybrane segmenty (z określonym czasem startu i obliczoną długością) są wycinane z oryginalnego klipu wideo.
+1. **Cutting**: Selected segments (with specified start time and calculated duration) are cut from the original video clip.
 
-2. **Przetwarzanie (Zachowanie Proporcji)**: Funkcja `crop_to_vertical` nie zmienia proporcji ani rozdzielczości klipu. Shorty zachowują oryginalne parametry wizualne.
+2. **Processing (Preserving Proportions)**: The `crop_to_vertical` function doesn't change clip proportions or resolution. Shorts preserve original visual parameters.
 
-3. **Obsługa Audio**: Podejmowana jest próba "odświeżenia" strumienia audio dla każdego subklipu, aby zminimalizować problemy z FFMPEG.
+3. **Audio Handling**: An attempt is made to "refresh" the audio stream for each subclip to minimize FFMPEG issues.
 
-4. **Zapis**: Każdy przetworzony segment jest zapisywany jako osobny plik MP4.
+4. **Saving**: Each processed segment is saved as a separate MP4 file.
 
-5. **Raport**: Na koniec generowany jest plik `ai_report.json`.
+5. **Report**: Finally, an `ai_report.json` file is generated.
 
-## 7. Struktura Programu
+## 7. Program Structure
 
-### Klasa AIShortGenerator
+### AIShortGenerator Class
 
-Główna logika programu zamknięta jest w klasie `AIShortGenerator`.
+The main program logic is enclosed in the `AIShortGenerator` class.
 
 ```python
 class AIShortGenerator:
     def __init__(self, video_path, output_dir="shorts", num_shorts=10,
                  short_duration=(30, 60), target_resolution=(1080, 1920)):
-        # ... inicjalizacja parametrów ...
-        self.sample_interval_actual = 1.0 # Rzeczywisty interwał próbkowania
+        # ... parameter initialization ...
+        self.sample_interval_actual = 1.0 # Actual sampling interval
 ```
 
-### Główne Metody
+### Main Methods
 
-- `__init__(...)`: Konstruktor, inicjalizuje parametry.
-- `extract_features_ai(frame)`: Ekstrahuje cechy wizualne z AI.
-- `extract_features_basic(frame)`: Ekstrahuje podstawowe cechy wizualne.
-- `analyze_comprehensive(video_clip)`: Przeprowadza kompleksową analizę wideo.
-- `analyze_audio_advanced(video_clip)`: Analizuje ścieżkę audio.
-- `calculate_motion(frame1, frame2)`: Oblicza ruch.
-- `calculate_interest_score(...)`: Oblicza wynik ciekawości dla próbki.
-- `find_optimal_segment_end(...)`: Określa optymalny czas zakończenia segmentu na podstawie spadku ciekawości.
-- `find_best_segments_ai(analysis_data, video_clip)`: Identyfikuje i wybiera najlepsze segmenty.
-- `crop_to_vertical(clip)`: Zwraca klip bez modyfikacji.
-- `generate_shorts()`: Główna metoda orkiestrująca proces.
-- `save_report(results, source_resolution)`: Zapisuje raport JSON.
+- `__init__(...)`: Constructor, initializes parameters.
+- `extract_features_ai(frame)`: Extracts visual features with AI.
+- `extract_features_basic(frame)`: Extracts basic visual features.
+- `analyze_comprehensive(video_clip)`: Performs comprehensive video analysis.
+- `analyze_audio_advanced(video_clip)`: Analyzes audio track.
+- `calculate_motion(frame1, frame2)`: Calculates motion.
+- `calculate_interest_score(...)`: Calculates interest score for a sample.
+- `find_optimal_segment_end(...)`: Determines optimal segment end time based on interest drop.
+- `find_best_segments_ai(analysis_data, video_clip)`: Identifies and selects best segments.
+- `crop_to_vertical(clip)`: Returns clip without modification.
+- `generate_shorts()`: Main method orchestrating the process.
+- `save_report(results, source_resolution)`: Saves JSON report.
 
-Funkcja `main()` obsługuje parsowanie argumentów linii komend i uruchamia generator.
+The `main()` function handles command line argument parsing and runs the generator.
 
-## 8. Pliki Wyjściowe
+## 8. Output Files
 
-Po zakończeniu działania programu, w folderze wyjściowym (domyślnie `shorts/`) znajdą się:
+After program completion, the output folder (default `shorts/`) will contain:
 
-### Pliki wideo .mp4
-Wygenerowane shorty, nazwane sekwencyjnie, np. `short_01.mp4`, `short_02.mp4`, itd.
+### Video files .mp4
+Generated shorts, named sequentially, e.g., `short_01.mp4`, `short_02.mp4`, etc.
 
-### Raport ai_report.json
-Plik w formacie JSON zawierający szczegółowe informacje:
+### Report ai_report.json
+JSON format file containing detailed information:
 
-- Dane źródłowe (ścieżka, rozdzielczość)
-- Typ analizy, liczba żądanych i utworzonych shortów
-- Informacja o inteligentnym kończeniu i statystyki powodów zakończenia segmentów (`ending_statistics`)
-- Ustawienia (zakres długości, cel formatu)
-- Lista wygenerowanych shortów z detalami:
-  - Nazwa pliku, czas startu, długość
-  - Wynik "ciekawości" (AI score)
-  - Numer klastra (jeśli dotyczy)
-  - Rozdzielczość
-  - Powód zakończenia segmentu (`end_reason`: np. `interest_drop`, `max_duration`, `fallback`)
+- Source data (path, resolution)
+- Analysis type, number of requested and created shorts
+- Information about intelligent ending and statistics of segment ending reasons (`ending_statistics`)
+- Settings (duration range, format target)
+- List of generated shorts with details:
+  - File name, start time, duration
+  - "Interest" score (AI score)
+  - Cluster number (if applicable)
+  - Resolution
+  - Segment ending reason (`end_reason`: e.g., `interest_drop`, `max_duration`, `fallback`)
 
-## 9. Informacje Dodatkowe
+## 9. Additional Information
 
-- Program dąży do wygenerowania `count` shortów, stosując różne strategie, w tym inteligentne kończenie.
-- Jakość i trafność wyboru segmentów zależy od materiału wideo i użycia analizy AI.
-- Próg spadku ciekawości (domyślnie spadek o 18%, czyli utrzymanie 82% bazowej ciekawości) można modyfikować w metodzie `find_optimal_segment_end` (zmienna `interest_threshold`).
-- Program wyświetla informacje o postępach i ewentualnych błędach w konsoli, w tym logi DEBUG dotyczące procesu znajdowania optymalnego końca segmentu.
+- The program strives to generate `count` shorts using various strategies, including intelligent ending.
+- Quality and accuracy of segment selection depends on video material and AI analysis usage.
+- The interest drop threshold (default 18% drop, i.e., maintaining 82% of base interest) can be modified in the `find_optimal_segment_end` method (`interest_threshold` variable).
+- The program displays progress information and potential errors in the console, including DEBUG logs regarding the optimal segment end finding process.
