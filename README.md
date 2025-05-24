@@ -34,7 +34,7 @@ Głównym celem jest dostarczenie określonej liczby shortów o zadanej długoś
 
 ## 3. Wymagania Systemowe i Instalacja
 
-**Wymagany Python:** wersja 3.x
+**Wymagany Python:** wersja 3.11
 
 **Biblioteki Python:**
 
@@ -49,7 +49,7 @@ Do poprawnego działania programu wymagane są następujące biblioteki:
 Można je zainstalować za pomocą pip:
 
 ```bash
-pip install moviepy librosa opencv-python numpy scikit-learn tensorflow
+py -3.11 -m pip install moviepy librosa opencv-python numpy scikit-learn tensorflow
 ```
 
 Jeśli nie chcesz korzystać z analizy opartej na TensorFlow, możesz pominąć instalację tej biblioteki. Program automatycznie wykryje jej brak i przełączy się na podstawowy tryb analizy.
@@ -61,13 +61,13 @@ Program uruchamia się z linii komend, podając ścieżkę do pliku wideo oraz o
 **Podstawowe użycie (generuje 10 shortów):**
 
 ```bash
-python AIShortGenerator.py /ścieżka/do/twojego/filmu.mp4
+py -3.11 .\ai-short-video-generator.py .\film.mp4
 ```
 
 **Użycie z dodatkowymi opcjami:**
 
 ```bash
-python AIShortGenerator.py /ścieżka/do/filmu.mp4 -o /folder/wyjsciowy -c 5 --min-duration 20 --max-duration 45
+py -3.11 .\ai-short-video-generator.py .\film.mp4 -o /folder/wyjsciowy -c 5 --min-duration 20 --max-duration 45
 ```
 
 ### Argumenty Linii Komend
@@ -81,10 +81,6 @@ python AIShortGenerator.py /ścieżka/do/filmu.mp4 -o /folder/wyjsciowy -c 5 --m
 - **`--min-duration`** (opcjonalny): Minimalna długość pojedynczego shortu w sekundach. Domyślnie: `30`.
 
 - **`--max-duration`** (opcjonalny): Maksymalna długość pojedynczego shortu w sekundach. Domyślnie: `60`.
-
-- **`--width`** (opcjonalny): Docelowa szerokość wideo (w pikselach). **Uwaga:** Obecnie ten parametr, podobnie jak `--height`, jest mniej istotny dla procesu kadrowania, ponieważ program zachowuje oryginalne proporcje i rozdzielczość. Może być używany w przyszłości lub do celów informacyjnych w raporcie. Domyślnie: `1080`.
-
-- **`--height`** (opcjonalny): Docelowa wysokość wideo (w pikselach). Patrz uwaga dla `--width`. Domyślnie: `1920`.
 
 ## 5. Jak To Działa?
 
