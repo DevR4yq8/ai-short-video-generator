@@ -1,3 +1,5 @@
+![](https://i.imgur.com/LjJhRj3.png)
+
 # AI Short Generator - Documentation
 
 ## Table of Contents
